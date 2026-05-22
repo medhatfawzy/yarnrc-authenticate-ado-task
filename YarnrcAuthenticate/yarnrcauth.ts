@@ -93,6 +93,28 @@ function resolveEndpointCredential(endpointId: string): AuthScheme {
   );
 }
 
+function resolveSystemAccessToken(): string {
+  const fromVariable =
+    tl.getVariable("System.AccessToken") ||
+    process.env.SYSTEM_ACCESSTOKEN ||
+    "";
+  if (fromVariable) {
+    return fromVariable;
+  }
+
+  try {
+    return (
+      tl.getEndpointAuthorizationParameter(
+        "SYSTEMVSSCONNECTION",
+        "AccessToken",
+        false,
+      ) || ""
+    );
+  } catch {
+    return "";
+  }
+}
+
 function ensureObject(parent: YamlObject, key: string): YamlObject {
   const current = parent[key];
   if (!current || typeof current !== "object" || Array.isArray(current)) {
@@ -123,16 +145,16 @@ async function run(): Promise<void> {
     const endpointIds = parseEndpointIds(
       tl.getInput("customEndpoint", false) || "",
     );
-    if (endpointIds.length === 0) {
-      tl.warning("No customEndpoint provided. Nothing to authenticate.");
-      return;
-    }
-
     const endpointCredentials = endpointIds.map(resolveEndpointCredential);
     const byRegistry = new Map<string, AuthScheme>();
     endpointCredentials.forEach((cred) =>
       byRegistry.set(cred.registryUrl, cred),
     );
+
+    const systemAccessToken = resolveSystemAccessToken();
+    if (systemAccessToken) {
+      tl.setSecret(systemAccessToken);
+    }
 
     const content = fs.readFileSync(workingFile, "utf8");
     const doc = (yaml.load(content) || {}) as YamlObject;
@@ -141,6 +163,8 @@ async function run(): Promise<void> {
     const npmRegistries = ensureObject(doc, "npmRegistries");
 
     let updatedScopes = 0;
+    let fallbackScopes = 0;
+    let fallbackRegistries = 0;
     Object.keys(npmScopes).forEach((scopeName) => {
       const scopeConfig = ensureObject(npmScopes, scopeName);
       const registry = normalizeRegistry(
@@ -151,16 +175,38 @@ async function run(): Promise<void> {
       }
 
       const cred = byRegistry.get(registry);
-      if (!cred) {
+      if (!cred && !systemAccessToken) {
+        tl.warning(
+          `No endpoint matching registry '${registry}' for npm scope '${scopeName}', and System.AccessToken is not available.`,
+        );
         return;
       }
 
+      const effectiveCred = cred || {
+        registryUrl: registry,
+        token: systemAccessToken,
+        authIdent: "",
+      };
+
+      if (!cred) {
+        console.log(
+          `No endpoint matching registry '${registry}' for npm scope '${scopeName}'. Falling back to System.AccessToken.`,
+        );
+        fallbackScopes += 1;
+
+        const fallbackRegConfig = ensureObject(npmRegistries, registry);
+        fallbackRegConfig.npmAlwaysAuth = true;
+        fallbackRegConfig.npmAuthToken = systemAccessToken;
+        delete fallbackRegConfig.npmAuthIdent;
+        fallbackRegistries += 1;
+      }
+
       scopeConfig.npmAlwaysAuth = true;
-      if (cred.token) {
-        scopeConfig.npmAuthToken = cred.token;
+      if (effectiveCred.token) {
+        scopeConfig.npmAuthToken = effectiveCred.token;
         delete scopeConfig.npmAuthIdent;
       } else {
-        scopeConfig.npmAuthIdent = cred.authIdent;
+        scopeConfig.npmAuthIdent = effectiveCred.authIdent;
         delete scopeConfig.npmAuthToken;
       }
 
@@ -186,8 +232,10 @@ async function run(): Promise<void> {
 
     tl.debug(`Updated scopes: ${updatedScopes}`);
     tl.debug(`Updated registries: ${updatedRegistries}`);
+    tl.debug(`Fallback scopes: ${fallbackScopes}`);
+    tl.debug(`Fallback registries: ${fallbackRegistries}`);
     console.log(
-      `Updated ${updatedScopes} npmScopes and ${updatedRegistries} npmRegistries in ${workingFile}.`,
+      `Updated ${updatedScopes} npmScopes and ${updatedRegistries} npmRegistries in ${workingFile}. Fallback applied to ${fallbackScopes} scopes and ${fallbackRegistries} registries using System.AccessToken.`,
     );
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
