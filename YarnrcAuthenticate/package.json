@@ -1,6 +1,6 @@
 {
   "name": "yarnrc-authenticate-task",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "description": "Minimal Azure Pipelines custom task to authenticate .yarnrc.yml registries.",
   "license": "MIT",
