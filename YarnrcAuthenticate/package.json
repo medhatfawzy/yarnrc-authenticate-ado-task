@@ -10,7 +10,7 @@
     "test": "echo 'No tests configured'"
   },
   "dependencies": {
-    "azure-pipelines-task-lib": "^4.17.3",
+    "azure-pipelines-task-lib": "^5.2.10",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
