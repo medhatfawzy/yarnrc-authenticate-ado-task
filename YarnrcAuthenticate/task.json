@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "d1544cdc-c742-4fbc-96a5-422db6937918",
+  "name": "YarnrcAuthenticate",
+  "friendlyName": "Authenticate .yarnrc.yml",
+  "description": "Updates npmScopes/npmRegistries authentication entries in a .yarnrc.yml file using service connection credentials.",
+  "helpMarkDown": "Provide a path to .yarnrc.yml and optional comma-separated service connections. Matching registries get npmAuthToken/npmAuthIdent and npmAlwaysAuth.",
+  "category": "Package",
+  "author": "Custom",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 2
+  },
+  "instanceNameFormat": "Authenticate $(workingFile)",
+  "inputs": [
+    {
+      "name": "workingFile",
+      "type": "filePath",
+      "label": "Path to .yarnrc.yml",
+      "required": true,
+      "helpMarkDown": "Path to the target .yarnrc.yml file."
+    },
+    {
+      "name": "customEndpoint",
+      "type": "connectedService:ExternalNpmRegistry",
+      "label": "Credentials for registries outside this organization/collection",
+      "required": false,
+      "properties": {
+        "EditableOptions": "True",
+        "MultiSelectFlatList": "True"
+      },
+      "helpMarkDown": "Comma-separated list of service connection IDs."
+    }
+  ],
+  "execution": {
+    "Node16": {
+      "target": "dist/yarnrcauth.js"
+    },
+    "Node20_1": {
+      "target": "dist/yarnrcauth.js"
+    },
+    "Node24": {
+      "target": "dist/yarnrcauth.js"
+    }
+  }
+}

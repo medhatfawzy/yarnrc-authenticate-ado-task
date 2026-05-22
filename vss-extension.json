@@ -1,0 +1,51 @@
+{
+  "manifestVersion": 1,
+  "id": "yarnrc-authenticate",
+  "version": "1.0.3",
+  "name": "YARNRC Authenticate",
+  "description": "Minimal Azure Pipelines custom task to authenticate .yarnrc.yml registries.",
+  "publisher": "medhatfawzy",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "files": [
+    {
+      "path": "YarnrcAuthenticate"
+    },
+    {
+      "path": "icon.png",
+      "addressable": true,
+      "assetType": "Microsoft.VisualStudio.Services.Icons.Default"
+    },
+    {
+      "path": "README.md",
+      "addressable": true,
+      "assetType": "Microsoft.VisualStudio.Services.Content.Details"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "yarnrc-authenticate",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "YarnrcAuthenticate"
+      }
+    }
+  ],
+  "tags": [
+    "Yarn",
+    "Yarnrc",
+    "Authenticate",
+    "Artifacts",
+    "npm"
+  ]
+}
