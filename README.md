@@ -14,17 +14,17 @@ Minimal custom Azure DevOps task inspired by `NpmAuthenticateV0`, but targeting 
 
 ## Structure
 
-- `Tasks/YarnrcAuthenticateV1/task.json`
-- `Tasks/YarnrcAuthenticateV1/src/yarnrcauth.ts`
-- `Tasks/YarnrcAuthenticateV1/dist/yarnrcauth.js` (generated)
+- `Tasks/YarnrcAuthenticate/task.json`
+- `Tasks/YarnrcAuthenticate/src/yarnrcauth.ts`
+- `Tasks/YarnrcAuthenticate/dist/yarnrcauth.js` (generated)
 - `package.json`
 - `tsconfig.json`
 
 ## Install deps
 
 ```bash
-npm install
-npm run build
+yarn install
+yarn build
 ```
 
 ## Use in pipeline (after packaging and publishing the custom task)

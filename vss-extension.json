@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "yarnrc-authenticate",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "name": "YARNRC Authenticate",
   "description": "Minimal Azure Pipelines custom task to authenticate .yarnrc.yml registries.",
   "publisher": "medhatfawzy",

@@ -1,11 +1,11 @@
 {
   "name": "yarnrc-authenticate-task",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "private": true,
   "description": "Minimal Azure Pipelines custom task to authenticate .yarnrc.yml registries.",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "esbuild ./yarnrcauth.ts --bundle --platform=node --outfile=./dist/yarnrcauth.js --external:shelljs",
     "lint": "echo 'No linter configured'",
     "test": "echo 'No tests configured'"
   },
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.14.12",
+    "esbuild": "^0.28.0",
     "typescript": "^5.5.4"
   },
   "packageManager": "yarn@4.14.1"

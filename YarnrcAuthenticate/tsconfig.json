@@ -9,8 +9,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": "YarnrcAuthenticate",
-    "outDir": "YarnrcAuthenticate/dist"
+    "rootDir": ".",
+    "outDir": "./dist"
   },
-  "include": ["YarnrcAuthenticate/**/*.ts"]
+  "include": ["./**/*.ts"]
 }
