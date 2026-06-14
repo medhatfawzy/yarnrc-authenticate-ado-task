@@ -3,6 +3,10 @@
   "version": "1.0.9",
   "private": true,
   "description": "Minimal Azure Pipelines custom task to authenticate .yarnrc.yml registries.",
+  "author": {
+    "name": "Medhat Fawzy",
+    "email": "medhat-fawzy@outlook.com"
+  },
   "license": "MIT",
   "scripts": {
     "build": "esbuild ./yarnrcauth.ts --bundle --platform=node --outfile=./dist/yarnrcauth.js --external:shelljs",
