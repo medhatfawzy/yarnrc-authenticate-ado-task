@@ -25,6 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Enable fetch for Node 16
+        if: matrix.node-version == 16
+        run: echo "NODE_OPTIONS=--experimental-fetch" >> "$GITHUB_ENV"
+
       - name: Enable Corepack
         run: corepack enable
       
