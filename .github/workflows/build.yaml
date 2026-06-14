@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16, 20, 24]
+        node-version: [20, 22, 24]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,20 +30,12 @@ jobs:
       
       - name: Install dependencies
         run: yarn install --immutable
-        env:
-          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
         
       - name: Run tests
         run: yarn test
-        env:
-          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
       
       - name: Lint code
         run: yarn lint
-        env:
-          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
       
       - name: Build extension
         run: yarn build
-        env:
-          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}

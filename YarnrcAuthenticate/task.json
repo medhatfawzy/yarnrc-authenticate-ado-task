@@ -34,9 +34,6 @@
     }
   ],
   "execution": {
-    "Node16": {
-      "target": "dist/yarnrcauth.js"
-    },
     "Node20_1": {
       "target": "dist/yarnrcauth.js"
     },
