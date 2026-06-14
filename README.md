@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # Yarnrc Authenticate Task (Minimal)
 
 Minimal custom Azure DevOps task inspired by `NpmAuthenticateV0`, but targeting `.yarnrc.yml`.
@@ -43,4 +45,4 @@ yarn build
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 — see the [LICENSE](LICENSE) file for details.
