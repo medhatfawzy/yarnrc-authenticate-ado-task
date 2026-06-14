@@ -177,7 +177,8 @@ async function run(): Promise<void> {
       const cred = byRegistry.get(registry);
       if (!cred && !systemAccessToken) {
         tl.warning(
-          `No endpoint matching registry '${registry}' for npm scope '${scopeName}', and System.AccessToken is not available.`,
+          `No endpoint matching registry '${registry}' for npm scope '${scopeName}'` +
+            `, and System.AccessToken is not available.`,
         );
         return;
       }
@@ -190,7 +191,8 @@ async function run(): Promise<void> {
 
       if (!cred) {
         console.log(
-          `No endpoint matching registry '${registry}' for npm scope '${scopeName}'. Falling back to System.AccessToken.`,
+          `No endpoint matching registry '${registry}' for npm scope '${scopeName}'.` +
+            ` Falling back to System.AccessToken.`,
         );
         fallbackScopes += 1;
 
@@ -235,7 +237,10 @@ async function run(): Promise<void> {
     tl.debug(`Fallback scopes: ${fallbackScopes}`);
     tl.debug(`Fallback registries: ${fallbackRegistries}`);
     console.log(
-      `Updated ${updatedScopes} npmScopes and ${updatedRegistries} npmRegistries in ${workingFile}. Fallback applied to ${fallbackScopes} scopes and ${fallbackRegistries} registries using System.AccessToken.`,
+      `Updated ${updatedScopes} npmScopes and ${updatedRegistries} npmRegistries in ${workingFile}.`,
+    );
+    console.log(
+      `Fallback applied to ${fallbackScopes} scopes and ${fallbackRegistries} registries using System.AccessToken.`,
     );
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
