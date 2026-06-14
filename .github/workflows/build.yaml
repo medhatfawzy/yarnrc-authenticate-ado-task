@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 24]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: YarnrcAuthenticate
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Enable Corepack
+        run: corepack enable
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+        
+      - name: Run tests
+        run: yarn test
+      
+      - name: Lint code
+        run: yarn lint
+      
+      - name: Build extension
+        run: yarn build
