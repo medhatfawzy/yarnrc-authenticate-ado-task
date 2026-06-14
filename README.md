@@ -1,4 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/build.yaml/badge.svg)](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/build.yaml)
+[![CodeQL](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/github-code-scanning/codeql)
 
 # Yarnrc Authenticate Task (Minimal)
 
