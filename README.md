@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/build.yaml/badge.svg)](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/build.yaml)
+[![CodeQL](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/medhatfawzy/yarnrc-authenticate-ado-task/actions/workflows/github-code-scanning/codeql)
+
 # Yarnrc Authenticate Task (Minimal)
 
 Minimal custom Azure DevOps task inspired by `NpmAuthenticateV0`, but targeting `.yarnrc.yml`.
@@ -40,3 +44,7 @@ yarn build
 
 - `workingFile` must be `.yarnrc.yml` or `.yarnrc.yaml`.
 - If no `customEndpoint` is provided, task exits with warning and no file changes.
+
+## License
+
+This project is licensed under the Apache 2.0 — see the [LICENSE](LICENSE) file for details.
