@@ -25,21 +25,25 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Enable fetch for Node 16
-        if: matrix.node-version == 16
-        run: echo "NODE_OPTIONS=--experimental-fetch" >> "$GITHUB_ENV"
-
       - name: Enable Corepack
         run: corepack enable
       
       - name: Install dependencies
         run: yarn install --immutable
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
         
       - name: Run tests
         run: yarn test
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
       
       - name: Lint code
         run: yarn lint
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
       
       - name: Build extension
         run: yarn build
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == 16 && '--experimental-fetch' || '' }}
