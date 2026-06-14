@@ -40,3 +40,7 @@ yarn build
 
 - `workingFile` must be `.yarnrc.yml` or `.yarnrc.yaml`.
 - If no `customEndpoint` is provided, task exits with warning and no file changes.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 — see the [LICENSE](LICENSE) file for details.
