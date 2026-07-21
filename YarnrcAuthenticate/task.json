@@ -31,6 +31,20 @@
         "MultiSelectFlatList": "True"
       },
       "helpMarkDown": "Comma-separated list of service connection IDs."
+    },
+    {
+      "name": "externalFeedToken",
+      "type": "string",
+      "label": "Token for external feeds",
+      "required": false,
+      "helpMarkDown": "A PAT or access token used to authenticate with external feeds outside this project. Use a secret variable reference e.g. $(MY_TOKEN)."
+    },
+    {
+      "name": "externalFeedUrl",
+      "type": "string",
+      "label": "External feed registry URLs",
+      "required": false,
+      "helpMarkDown": "Comma-separated list of registry URLs for external feeds that should use the provided token."
     }
   ],
   "execution": {

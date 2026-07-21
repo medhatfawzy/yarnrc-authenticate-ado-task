@@ -31,7 +31,7 @@ yarn install
 yarn build
 ```
 
-## Use in pipeline (after packaging and publishing the custom task)
+## Use in pipeline
 
 ```yaml
 - task: YarnrcAuthenticate@1

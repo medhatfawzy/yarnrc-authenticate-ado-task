@@ -146,10 +146,33 @@ async function run(): Promise<void> {
       tl.getInput("customEndpoint", false) || "",
     );
     const endpointCredentials = endpointIds.map(resolveEndpointCredential);
+
+    const externalFeedToken = tl.getInput("externalFeedToken", false) || "";
+    const externalFeedUrlRaw = tl.getInput("externalFeedUrl", false) || "";
+    const externalFeedCredentials: AuthScheme[] = [];
+    if (externalFeedToken && externalFeedUrlRaw) {
+      tl.setSecret(externalFeedToken);
+      const externalUrls = externalFeedUrlRaw
+        .split(",")
+        .map((u) => normalizeRegistry(u.trim()))
+        .filter((u) => u.length > 0);
+      for (const url of externalUrls) {
+        externalFeedCredentials.push({
+          registryUrl: url,
+          token: externalFeedToken,
+          authIdent: "",
+        });
+      }
+    } else if (externalFeedToken && !externalFeedUrlRaw) {
+      tl.warning(
+        "externalFeedToken was provided but externalFeedUrl is empty. " +
+          "The token will not be applied to any registry.",
+      );
+    }
+
+    const allCredentials = [...endpointCredentials, ...externalFeedCredentials];
     const byRegistry = new Map<string, AuthScheme>();
-    endpointCredentials.forEach((cred) =>
-      byRegistry.set(cred.registryUrl, cred),
-    );
+    allCredentials.forEach((cred) => byRegistry.set(cred.registryUrl, cred));
 
     const systemAccessToken = resolveSystemAccessToken();
     if (systemAccessToken) {
@@ -216,7 +239,7 @@ async function run(): Promise<void> {
     });
 
     let updatedRegistries = 0;
-    endpointCredentials.forEach((cred) => {
+    allCredentials.forEach((cred) => {
       const regConfig = ensureObject(npmRegistries, cred.registryUrl);
       regConfig.npmAlwaysAuth = true;
       if (cred.token) {
