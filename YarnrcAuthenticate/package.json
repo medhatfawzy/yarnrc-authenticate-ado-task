@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "azure-pipelines-task-lib": "^5.2.10",
-    "js-yaml": "^4.2.0"
+    "js-yaml": "^4.3.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
